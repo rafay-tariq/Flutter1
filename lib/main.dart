@@ -6,8 +6,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Happy not include thiss'),
+    return MaterialApp(
+      home: Text("Hello"),
     );
   }
 }
