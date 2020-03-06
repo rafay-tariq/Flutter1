@@ -15,16 +15,21 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   var questionIndex = 0;
+  int _totalScore = 0;
 
-  void answerQuestion() {
+  void resetQuiz(){
+    setState(() {
+      questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+  
+  void answerQuestion(int score) {
     print('Correct Answer');
     setState(() {
       questionIndex = questionIndex + 1;
-      // var maxlength = question.length;
-      // print(maxlength);
-      // if (questionIndex >= maxlength) {
-      //   questionIndex = 0;
-      // }
+      _totalScore+= score;
+      print(_totalScore);
     });
 
     print(questionIndex);
@@ -33,15 +38,28 @@ class MyAppState extends State<MyApp> {
   var question = [
     {
       'question': 'what\'s your fav color?',
-      'answer': ['red', 'black', 'yellow'],
+      'answer': [
+        {'text': 'red', 'score': 2},
+        {'text': 'black', 'score': 10},
+        {'text': 'yellow', 'score': 6},
+      ],
     },
     {
       'question': 'what\'s your fav animal?',
-      'answer': ['rabbit', 'snake', 'elephant'],
+      'answer': [
+        {'text': 'rabbit', 'score': 2},
+        {'text': 'snake', 'score': 10},
+        {'text': 'elephant', 'score': 8},
+      ],
     },
     {
       'question': 'what\'s your fav instructor?',
-      'answer': ['maps', 'maps', 'maps', 'maps'],
+      'answer': [
+        {'text': 'maps', 'score': 1},
+        {'text': 'maps', 'score': 1},
+        {'text': 'maps', 'score': 1},
+        {'text': 'maps', 'score': 1},
+      ],
     },
   ];
 
@@ -49,41 +67,16 @@ class MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text("PkAdmissions")),
-        body: questionIndex < question.length
-            ? Quiz(questionIndex: questionIndex , question: question, answerQuestion: answerQuestion)
-            : Result()
-      ),
+          appBar: AppBar(title: Text("PkAdmissions")),
+          body: questionIndex < question.length
+              ? Quiz(
+                  questionIndex: questionIndex,
+                  question: question,
+                  answerQuestion: answerQuestion)
+              : Result(_totalScore, resetQuiz)),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import 'package:flutter/material.dart';
 // import './tempQuestion.dart';
